@@ -426,6 +426,78 @@ input ResponseCreateInput {
   answers: String
 }
 
+type MySQLDataList {
+  id: ID!
+  version: String
+  businessUnit: String
+  month: DateTime
+  sales: Int
+}
+
+input MySQLDataListWhereUniqueInput {
+  id: ID
+}
+
+input MySQLDataListWhereInput {
+  AND: [MySQLDataListWhereInput!]
+  OR: [MySQLDataListWhereInput!]
+  NOT: [MySQLDataListWhereInput!]
+  id: IDFilter
+  version: StringFilter
+  businessUnit: StringFilter
+  month: DateTimeFilter
+  sales: IntNullableFilter
+}
+
+input DateTimeFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: DateTimeFilter
+}
+
+input IntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntNullableFilter
+}
+
+input MySQLDataListOrderByInput {
+  id: OrderDirection
+  version: OrderDirection
+  businessUnit: OrderDirection
+  month: OrderDirection
+  sales: OrderDirection
+}
+
+input MySQLDataListUpdateInput {
+  version: String
+  businessUnit: String
+  month: DateTime
+  sales: Int
+}
+
+input MySQLDataListUpdateArgs {
+  where: MySQLDataListWhereUniqueInput!
+  data: MySQLDataListUpdateInput!
+}
+
+input MySQLDataListCreateInput {
+  version: String
+  businessUnit: String
+  month: DateTime
+  sales: Int
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -468,6 +540,12 @@ type Mutation {
   updateResponses(data: [ResponseUpdateArgs!]!): [Response]
   deleteResponse(where: ResponseWhereUniqueInput!): Response
   deleteResponses(where: [ResponseWhereUniqueInput!]!): [Response]
+  createMySQLDataList(data: MySQLDataListCreateInput!): MySQLDataList
+  createMySQLDataLists(data: [MySQLDataListCreateInput!]!): [MySQLDataList]
+  updateMySQLDataList(where: MySQLDataListWhereUniqueInput!, data: MySQLDataListUpdateInput!): MySQLDataList
+  updateMySQLDataLists(data: [MySQLDataListUpdateArgs!]!): [MySQLDataList]
+  deleteMySQLDataList(where: MySQLDataListWhereUniqueInput!): MySQLDataList
+  deleteMySQLDataLists(where: [MySQLDataListWhereUniqueInput!]!): [MySQLDataList]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -509,6 +587,9 @@ type Query {
   response(where: ResponseWhereUniqueInput!): Response
   responses(where: ResponseWhereInput! = {}, orderBy: [ResponseOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ResponseWhereUniqueInput): [Response!]
   responsesCount(where: ResponseWhereInput! = {}): Int
+  mySQLDataList(where: MySQLDataListWhereUniqueInput!): MySQLDataList
+  mySQLDataLists(where: MySQLDataListWhereInput! = {}, orderBy: [MySQLDataListOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: MySQLDataListWhereUniqueInput): [MySQLDataList!]
+  mySQLDataListsCount(where: MySQLDataListWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }

@@ -65,3 +65,11 @@ model Response {
 
   @@index([surveyId])
 }
+
+model MySQLDataList {
+  id           String   @id @default(cuid())
+  version      String   @default("")
+  businessUnit String   @default("")
+  month        DateTime
+  sales        Int?
+}

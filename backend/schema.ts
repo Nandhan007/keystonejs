@@ -5,7 +5,7 @@
 // If you want to learn more about how lists are configured, please read
 // - https://keystonejs.com/docs/config/lists
 
-import { list } from "@keystone-6/core";
+import { list, config } from "@keystone-6/core";
 import { allowAll } from "@keystone-6/core/access";
 
 // see https://keystonejs.com/docs/fields/overview for the full list of fields
@@ -17,6 +17,7 @@ import {
   timestamp,
   select,
   checkbox,
+  integer,
 } from "@keystone-6/core/fields";
 
 // the document field is a more complicated field, so it has it's own package
@@ -181,6 +182,16 @@ export const lists = {
     fields: {
       survey: relationship({ ref: "Survey" }),
       answers: text({ ui: { displayMode: "input" } }), // JSON-encoded responses
+    },
+  }),
+
+  MySQLDataList: list({
+    access: allowAll,
+    fields: {
+      version: text({ validation: { isRequired: true } }),
+      businessUnit: text({ validation: { isRequired: true } }),
+      month: timestamp({ validation: { isRequired: true } }),
+      sales: integer(),
     },
   }),
 } satisfies Lists;
